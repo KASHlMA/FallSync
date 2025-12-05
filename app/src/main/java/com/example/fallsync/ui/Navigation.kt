@@ -1,61 +1,40 @@
 package com.example.fallsync.ui
 
-import android.R.attr.type
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import com.example.fallsync.ui.screens.*
-import com.example.fallsync.ui.viewmodel.FallSyncViewModel
+
+import com.example.fallsync.ui.screens.HomeScreen
+//import com.example.fallsync.ui.screens.CreateScreen
+//import com.example.fallsync.ui.screens.UpdateScreen
+//import com.example.fallsync.ui.screens.FallDetectionScreen
 
 @Composable
 fun Navigation() {
 
     val navController = rememberNavController()
-    val fallVM: FallSyncViewModel = viewModel()
 
-    NavHost(
-        navController = navController,
-        startDestination = "home"
-    ) {
+    NavHost(navController = navController, startDestination = "home") {
 
-        // HOME → GET y DELETE
+        // HOME
         composable("home") {
-            HomeScreen(
-                navController = navController,
-                viewModel = fallVM
-            )
+            HomeScreen(navController = navController)
         }
 
-        // CREATE → POST
-        composable("create") {
-            CreateScreen(
-                navController = navController,
-                viewModel = fallVM
-            )
-        }
+        // CREATE
+      //  composable("create") {
+       //     CreateScreen(navController = navController)
+      //  }
 
-        // UPDATE → PUT/PATCH (con argumento id)
-        composable(
-            route = "update/{id}",
-            arguments = listOf(navArgument("id") { type = NavType.StringType })
-        ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getString("id") ?: ""
-            UpdateScreen(
-                navController = navController,
-                viewModel = fallVM,
-                itemId = id
-            )
-        }
+        // UPDATE — ejemplo sin argumentos
+        //   composable("update") {
+        //      UpdateScreen(navController = navController, itemId = "")
+        //   }
 
-        // Fall Detection Screen
-        composable("fallDetection") {
-            FallDetectionScreen(
-                navController = navController
-            )
-        }
+        // FALL DETECTION
+        //  composable("fallDetection") {
+        //      FallDetectionScreen(navController = navController)
+        //   }
     }
 }

@@ -3,7 +3,7 @@ package com.example.fallsync
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.fallsync.navigation.Navigation
+import com.example.fallsync.ui.Navigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
