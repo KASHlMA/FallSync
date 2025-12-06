@@ -58,7 +58,7 @@ fun HomeScreen(navController: NavController) {
                                 1 -> navController.navigate("list")
                                 2 -> navController.navigate("create")
                                 3 -> navController.navigate("fallDetection")
-                            }
+                            }//
                         }
                     )
                 }
