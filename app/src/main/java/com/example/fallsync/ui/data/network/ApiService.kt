@@ -1,18 +1,15 @@
 package com.example.fallsync.ui.data.network
 
 import com.example.fallsync.ui.model.Registro
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.DELETE
+import retrofit2.http.Path
 
-object ApiService {
-    suspend fun getRegistros(): List<Registro> {
-        // Simulación de datos
-        return listOf(
-            Registro(1, "2025-01-03"),
-            Registro(2, "2025-01-05")
-        )
-    }
+interface ApiService {
+    @GET("registros")
+    suspend fun getRegistros(): Response<List<Registro>>
 
-    suspend fun deleteRegistro(id: Int): Boolean {
-        // Simulación de éxito
-        return true
-    }
+    @DELETE("registros/{id}")
+    suspend fun deleteRegistro(@Path("id") id: Int): Response<Unit>
 }

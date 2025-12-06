@@ -1,15 +1,17 @@
 package com.example.fallsync.ui.ViewModel
 
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fallsync.ui.data.repository.RegistroRepository
 import com.example.fallsync.ui.model.Registro
-import com.example.fallsync.ui.data.network.ApiService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class RegistrosViewModel : ViewModel() {
+class RegistrosViewModel(
+    private val repository: RegistroRepository = RegistroRepository()
+) : ViewModel() {
+
     private val _registros = MutableStateFlow<List<Registro>>(emptyList())
     val registros: StateFlow<List<Registro>> = _registros
 
@@ -19,14 +21,17 @@ class RegistrosViewModel : ViewModel() {
 
     fun fetchRegistros() {
         viewModelScope.launch {
-            val response = ApiService.getRegistros()
-            _registros.value = response
+            try {
+                _registros.value = repository.getRegistros()
+            } catch (e: Exception) {
+                _registros.value = emptyList()
+            }
         }
     }
 
     fun deleteRegistro(id: Int) {
         viewModelScope.launch {
-            val success = ApiService.deleteRegistro(id)
+            val success = repository.deleteRegistro(id)
             if (success) fetchRegistros()
         }
     }

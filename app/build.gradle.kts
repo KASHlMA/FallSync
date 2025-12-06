@@ -44,6 +44,21 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.2")
     implementation(libs.androidx.compose.material3)
 
+    // --- Retrofit ---
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
+    // --- OkHttp (opcional, pero recomendado para logging) ---
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    // --- Coroutines ---
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+
+    // --- Lifecycle ViewModel (ya tienes runtime, pero falta viewmodel-ktx) ---
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
