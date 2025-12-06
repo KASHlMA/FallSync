@@ -2,12 +2,12 @@ package com.example.fallsync.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,8 +18,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController) {
+
     var selectedItem by remember { mutableStateOf(0) }
 
     val items = listOf("Inicio", "Registros", "Crear", "Caídas")
@@ -27,39 +29,39 @@ fun HomeScreen(navController: NavController) {
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = { Text("FallSync", fontWeight = FontWeight.Bold) },
-                backgroundColor = MaterialTheme.colors.primary,
-                elevation = 6.dp
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
             )
         },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { navController.navigate("create") },
-                backgroundColor = MaterialTheme.colors.secondary
+                containerColor = MaterialTheme.colorScheme.secondary
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Crear")
             }
         },
         bottomBar = {
-            BottomNavigation(
-                backgroundColor = MaterialTheme.colors.primarySurface,
-                elevation = 10.dp
+            NavigationBar(
+                containerColor = MaterialTheme.colorScheme.primary
             ) {
                 items.forEachIndexed { index, item ->
-                    BottomNavigationItem(
-                        icon = { Icon(icons[index], contentDescription = item) },
-                        label = { Text(item) },
+                    NavigationBarItem(
                         selected = selectedItem == index,
                         onClick = {
                             selectedItem = index
-                            when(index) {
+                            when (index) {
                                 0 -> navController.navigate("home")
                                 1 -> navController.navigate("list")
                                 2 -> navController.navigate("create")
                                 3 -> navController.navigate("fallDetection")
-                            }//
-                        }
+                            }
+                        },
+                        icon = { Icon(icons[index], contentDescription = item) },
+                        label = { Text(item) }
                     )
                 }
             }
@@ -76,14 +78,18 @@ fun HomeScreen(navController: NavController) {
                 ),
             contentAlignment = Alignment.Center
         ) {
+
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
                 Text(
                     "Bienvenido a FallSync",
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
+
                 Spacer(modifier = Modifier.height(16.dp))
+
                 Text(
                     "Tu app para gestionar y detectar caídas",
                     fontSize = 16.sp,
