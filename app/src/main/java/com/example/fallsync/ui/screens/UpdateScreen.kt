@@ -6,6 +6,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import io.ktor.client.*
+import io.ktor.client.request.*
+import io.ktor.http.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -18,6 +23,9 @@ fun UpdateScreen(
 
     var descripcion by remember { mutableStateOf(initialDescripcion) }
     var fecha by remember { mutableStateOf(initialFecha) }
+
+    val client = HttpClient()
+    val scope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
@@ -49,7 +57,26 @@ fun UpdateScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
-                onClick = { },
+                onClick = {
+                    scope.launch(Dispatchers.IO) {
+                        try {
+                            client.put("http://TU_API/registros/$id") {
+                                contentType(ContentType.Application.Json)
+                                setBody(
+                                    mapOf(
+                                        "descripcion" to descripcion,
+                                        "fecha" to fecha
+                                    )
+                                )
+                            }
+
+                            navController.popBackStack()
+
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
