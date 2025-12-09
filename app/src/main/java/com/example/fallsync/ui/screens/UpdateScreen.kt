@@ -5,13 +5,19 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UpdateScreen() {
+fun UpdateScreen(
+    navController: NavController,
+    id: Int,
+    initialDescripcion: String,
+    initialFecha: String
+) {
 
-    var descripcion by remember { mutableStateOf("") }
-    var fecha by remember { mutableStateOf("") }
+    var descripcion by remember { mutableStateOf(initialDescripcion) }
+    var fecha by remember { mutableStateOf(initialFecha) }
 
     Scaffold(
         topBar = {
@@ -43,7 +49,7 @@ fun UpdateScreen() {
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
-                onClick = { /* lógica en siguiente commit */ },
+                onClick = { },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
