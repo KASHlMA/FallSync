@@ -5,10 +5,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateScreen() {
+fun CreateScreen(navController: NavController) {
 
     var descripcion by remember { mutableStateOf("") }
     var fecha by remember { mutableStateOf("") }
@@ -43,7 +44,9 @@ fun CreateScreen() {
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
-                onClick = { /* sin lógica aún */ },
+                onClick = {
+                    
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
