@@ -60,7 +60,7 @@ fun UpdateScreen(
                 onClick = {
                     scope.launch(Dispatchers.IO) {
                         try {
-                            client.put("http://TU_API/registros/$id") {
+                            client.put("http:") {
                                 contentType(ContentType.Application.Json)
                                 setBody(
                                     mapOf(
