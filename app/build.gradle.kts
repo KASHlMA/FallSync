@@ -59,6 +59,11 @@ dependencies {
     // --- Lifecycle ViewModel (ya tienes runtime, pero falta viewmodel-ktx) ---
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
 
+
+    implementation("io.ktor:ktor-client-core:2.3.8")
+    implementation("io.ktor:ktor-client-okhttp:2.3.8")
+    implementation("io.ktor:ktor-client-json:2.3.8")
+    implementation("io.ktor:ktor-client-serialization:2.3.8")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
