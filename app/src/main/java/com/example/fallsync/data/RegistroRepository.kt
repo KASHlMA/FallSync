@@ -30,17 +30,21 @@ class RegistroRepository {
         }
     }
 
-    // POST (Crear) - Maneja la conversión a Multipart
-    suspend fun createRegistro(descripcion: String, fecha: String): Boolean {
+    // POST (Crear) - Ahora devuelve el Registro creado (o null si falla) para obtener su ID
+    suspend fun createRegistro(descripcion: String, fecha: String): Registro? {
         return try {
             val descPart = toRequestBody(descripcion)
             val fechaPart = toRequestBody(fecha)
 
             val response = api.createRegistro(descPart, fechaPart)
-            response.isSuccessful
+            if (response.isSuccessful) {
+                response.body() // Devolvemos el objeto completo (con ID)
+            } else {
+                null
+            }
         } catch (e: Exception) {
             e.printStackTrace()
-            false
+            null
         }
     }
 
