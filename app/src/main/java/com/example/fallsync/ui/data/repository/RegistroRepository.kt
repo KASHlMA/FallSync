@@ -1,7 +1,7 @@
 package com.example.fallsync.ui.data.repository
 
 import com.example.fallsync.ui.data.network.RetrofitInstance
-import com.example.fallsync.ui.model.Registro
+import com.example.fallsync.ui.modela.Registro
 
 class RegistroRepository {
     private val api = RetrofitInstance.api

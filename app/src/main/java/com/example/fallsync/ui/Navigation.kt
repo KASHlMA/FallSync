@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.fallsync.ui.screens.AccelerometerScreen
 
 import com.example.fallsync.ui.screens.HomeScreen
 //import com.example.fallsync.ui.screens.CreateScreen
@@ -36,5 +37,9 @@ fun Navigation() {
         //  composable("fallDetection") {
         //      FallDetectionScreen(navController = navController)
         //   }
+        // ACCELEROMETER
+        composable("accelerometer") {
+            AccelerometerScreen()
+        }
     }
 }

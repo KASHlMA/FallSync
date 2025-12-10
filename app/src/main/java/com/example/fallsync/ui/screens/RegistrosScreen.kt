@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.fallsync.ui.ViewModel.RegistrosViewModel
-import com.example.fallsync.ui.model.Registro
+import com.example.fallsync.ui.modela.Registro
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit

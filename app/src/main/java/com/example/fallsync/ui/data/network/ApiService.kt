@@ -1,6 +1,7 @@
 package com.example.fallsync.ui.data.network
 
-import com.example.fallsync.ui.model.Registro
+
+import com.example.fallsync.ui.modela.Registro
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.DELETE
