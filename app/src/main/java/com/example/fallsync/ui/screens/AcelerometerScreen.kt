@@ -7,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.fallsync.ui.ViewModel.AccelerometerViewModel
+import com.example.fallsync.ui.viewmodel.AccelerometerViewModel
 
 @Composable
 fun AccelerometerScreen(viewModel: AccelerometerViewModel = viewModel()) {

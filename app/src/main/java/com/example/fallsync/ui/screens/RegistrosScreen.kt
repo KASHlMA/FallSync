@@ -22,7 +22,6 @@ fun RegistrosScreen(
     navController: NavController,
     viewModel: RegistrosViewModel = viewModel()
 ) {
-    // Asegúrate de que viewModel.registros sea un StateFlow
     val registros by viewModel.registros.collectAsState()
 
     LazyColumn(

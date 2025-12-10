@@ -2,13 +2,8 @@ package com.example.fallsync.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.* // Importante para el Button y MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -16,84 +11,53 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController) {
-
-    var selectedItem by remember { mutableStateOf(0) }
-
-    val items = listOf("Inicio", "Registros", "Crear", "Caídas")
-    val icons = listOf(Icons.Default.Home, Icons.Default.List, Icons.Default.Add, Icons.Default.Warning)
-
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("FallSync", fontWeight = FontWeight.Bold) },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary
+fun HomeScreen(
+    // 1. Recibimos la función de navegación desde Navigation.kt
+    onStartDetectionClick: () -> Unit = {}
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(Color(0xFF2196F3), Color(0xFFBBDEFB))
                 )
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+            Text(
+                "Bienvenido a FallSync",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { navController.navigate("create") },
-                containerColor = MaterialTheme.colorScheme.secondary
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                "Tu app para gestionar y detectar caídas",
+                fontSize = 16.sp,
+                color = Color.White.copy(alpha = 0.8f)
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // 2. AGREGAMOS EL BOTÓN QUE FALTABA
+            Button(
+                onClick = onStartDetectionClick, // Usamos la función recibida
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+                modifier = Modifier
+                    .padding(horizontal = 32.dp)
+                    .fillMaxWidth()
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Crear")
-            }
-        },
-        bottomBar = {
-            NavigationBar(
-                containerColor = MaterialTheme.colorScheme.primary
-            ) {
-                items.forEachIndexed { index, item ->
-                    NavigationBarItem(
-                        selected = selectedItem == index,
-                        onClick = {
-                            selectedItem = index
-                            when (index) {
-                                0 -> navController.navigate("home")
-                                1 -> navController.navigate("list")
-                                2 -> navController.navigate("create")
-                                3 -> navController.navigate("fallDetection")
-                            }
-                        },
-                        icon = { Icon(icons[index], contentDescription = item) },
-                        label = { Text(item) }
-                    )
-                }
-            }
-        }
-    ) { padding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(Color(0xFF2196F3), Color(0xFFBBDEFB))
-                    )
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-
                 Text(
-                    "Bienvenido a FallSync",
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    "Tu app para gestionar y detectar caídas",
-                    fontSize = 16.sp,
-                    color = Color.White.copy(alpha = 0.8f)
+                    text = "Iniciar detección",
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Bold
                 )
             }
         }
