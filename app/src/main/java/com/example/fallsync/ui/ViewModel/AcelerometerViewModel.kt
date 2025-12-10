@@ -1,4 +1,4 @@
-package com.example.fallsync.ui.ViewModel
+package com.example.fallsync.ui.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

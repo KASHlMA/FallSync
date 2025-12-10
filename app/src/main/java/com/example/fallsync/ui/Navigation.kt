@@ -6,7 +6,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.fallsync.ui.screens.AccelerometerScreen
 
+
 import com.example.fallsync.ui.screens.HomeScreen
+import com.example.fallsync.ui.screens.RegistrosScreen
+
 //import com.example.fallsync.ui.screens.CreateScreen
 //import com.example.fallsync.ui.screens.UpdateScreen
 //import com.example.fallsync.ui.screens.FallDetectionScreen
@@ -22,6 +25,11 @@ fun Navigation() {
         composable("home") {
             HomeScreen(navController = navController)
         }
+        // REGISTROS
+       composable("registros") {
+           RegistrosScreen(navController = navController)
+        }
+
 
         // CREATE
       //  composable("create") {

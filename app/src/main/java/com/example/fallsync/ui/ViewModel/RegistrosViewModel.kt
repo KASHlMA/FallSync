@@ -1,9 +1,9 @@
-package com.example.fallsync.ui.ViewModel
+package com.example.fallsync.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fallsync.ui.data.repository.RegistroRepository
-import com.example.fallsync.ui.modela.Registro
+import com.example.fallsync.ui.model.Registro
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

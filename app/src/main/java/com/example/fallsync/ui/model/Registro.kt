@@ -1,4 +1,4 @@
-package com.example.fallsync.ui.modela
+package com.example.fallsync.ui.model
 
 data class Registro(
     val id: Int,
