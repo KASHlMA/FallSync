@@ -35,13 +35,13 @@ class RegistrosViewModel(
         }
     }
 
-    // POST (Nuevo)
-    fun createRegistro(descripcion: String, fecha: String, onSuccess: () -> Unit) {
+    // POST (Modificado para devolver el ID)
+    fun createRegistro(descripcion: String, fecha: String, onSuccess: (Int) -> Unit) {
         viewModelScope.launch {
-            val success = repository.createRegistro(descripcion, fecha)
-            if (success) {
-                fetchRegistros() // Recargar lista
-                onSuccess() // Avisar a la UI para que cierre la pantalla o navegue
+            val nuevoRegistro = repository.createRegistro(descripcion, fecha)
+            if (nuevoRegistro != null) {
+                fetchRegistros() // Recargar lista para que aparezca en todos lados
+                onSuccess(nuevoRegistro.id) // ¡Aquí pasamos el ID nuevo!
             }
         }
     }
