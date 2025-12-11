@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.lifecycle.viewmodel.compose.viewModel // <--- IMPORTANTE
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -18,18 +19,19 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.fallsync.ui.screens.*
+import com.example.fallsync.ui.viewmodel.RegistrosViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
 
-    // Detectamos la ruta actual para iluminar el ícono de abajo
+    val sharedViewModel: RegistrosViewModel = viewModel()
+
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
     Scaffold(
-        // 1. BARRA SUPERIOR
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text("FallSync", fontWeight = FontWeight.Bold) },
@@ -39,9 +41,6 @@ fun Navigation() {
                 )
             )
         },
-        // 2. HEMOS QUITADO EL BOTÓN FLOTANTE (+) AQUÍ
-
-        // 3. BARRA INFERIOR
         bottomBar = {
             NavigationBar(containerColor = MaterialTheme.colorScheme.primary) {
                 val items = listOf(
@@ -56,17 +55,10 @@ fun Navigation() {
                         label = { Text(label) },
                         selected = currentRoute == route,
                         onClick = {
-                            // LÓGICA CORREGIDA PARA QUE NO SE TRABE
                             if (currentRoute != route) {
                                 navController.navigate(route) {
-                                    // 1. Limpia todo hasta llegar a Home para no acumular pantallas
-                                    popUpTo("home") {
-                                        // Si vas a Home, no guardes estado, reinicia limpio
-                                        saveState = false
-                                    }
-                                    // 2. Evita abrir la misma pantalla dos veces
+                                    popUpTo("home") { saveState = false }
                                     launchSingleTop = true
-                                    // 3. Quitamos restoreState para evitar que cargue una pantalla "congelada"
                                 }
                             }
                         },
@@ -81,7 +73,6 @@ fun Navigation() {
             }
         }
     ) { paddingValues ->
-        // 4. NAVHOST
         NavHost(
             navController = navController,
             startDestination = "home",
@@ -94,17 +85,26 @@ fun Navigation() {
 
             // REGISTROS
             composable("registros") {
-                RegistrosScreen(navController = navController)
+                RegistrosScreen(
+                    navController = navController,
+                    viewModel = sharedViewModel
+                )
             }
 
             // CREATE
             composable("create") {
-                CreateScreen(navController = navController)
+                CreateScreen(
+                    navController = navController,
+                    viewModel = sharedViewModel
+                )
             }
 
             // SENSOR
             composable("fallDetection") {
-                FallDetectionScreen(navController = navController)
+                FallDetectionScreen(
+                    navController = navController,
+                    viewModel = sharedViewModel
+                )
             }
 
             // UPDATE
@@ -113,7 +113,11 @@ fun Navigation() {
                 arguments = listOf(navArgument("registroId") { type = NavType.IntType })
             ) { backStackEntry ->
                 val id = backStackEntry.arguments?.getInt("registroId") ?: 0
-                UpdateScreen(navController = navController, registroId = id)
+                UpdateScreen(
+                    navController = navController,
+                    registroId = id,
+                    viewModel = sharedViewModel
+                )
             }
         }
     }

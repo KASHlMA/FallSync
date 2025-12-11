@@ -2,19 +2,19 @@ package com.example.fallsync.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items // Importante para que funcione items(registros)
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fallsync.ui.viewmodel.RegistrosViewModel
-import com.example.fallsync.ui.model.Registro
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrosScreen(
     navController: NavController,
@@ -22,49 +22,46 @@ fun RegistrosScreen(
 ) {
     val registros by viewModel.registros.collectAsState()
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(12.dp)
-    ) {
-        items(registros) { registro ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 6.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface
-                ),
-                shape = MaterialTheme.shapes.large
-            ) {
-                Column(
+    if (registros.isEmpty()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text("No hay registros guardados 📭")
+        }
+    } else {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp)
+        ) {
+            items(registros) { registro ->
+                Card(
+                    onClick = { navController.navigate("update/${registro.id}") },
                     modifier = Modifier
-                        .padding(16.dp)
                         .fillMaxWidth()
+                        .padding(vertical = 6.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    ),
+                    shape = MaterialTheme.shapes.large
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                    Column(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth()
                     ) {
-                        Text(
-                            text = "📍 Registro de caída",
-                            style = MaterialTheme.typography.titleLarge,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                        Row {
-                            IconButton(onClick = {
-                                navController.navigate("update/${registro.id}")
-                            }) {
-                                Icon(
-                                    Icons.Default.Edit,
-                                    contentDescription = "Editar",
-                                    tint = MaterialTheme.colorScheme.secondary
-                                )
-                            }
-                            IconButton(onClick = {
-                                viewModel.deleteRegistro(registro.id)
-                            }) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = registro.descripcion,
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.weight(1f)
+                            )
+
+                            IconButton(onClick = { viewModel.deleteRegistro(registro.id) }) {
                                 Icon(
                                     Icons.Default.Delete,
                                     contentDescription = "Borrar",
@@ -72,25 +69,23 @@ fun RegistrosScreen(
                                 )
                             }
                         }
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Surface(
-                        color = MaterialTheme.colorScheme.secondaryContainer,
-                        shape = MaterialTheme.shapes.small
-                    ) {
-                        Text(
-                            text = "Fecha: ${registro.fecha}",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSecondaryContainer,
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
-                        )
+
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        Surface(
+                            color = MaterialTheme.colorScheme.secondaryContainer,
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Text(
+                                text = "📅 ${registro.fecha}",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                            )
+                        }
                     }
                 }
             }
-            Divider(
-                modifier = Modifier.padding(vertical = 4.dp),
-                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
-            )
         }
     }
 }
