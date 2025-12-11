@@ -104,13 +104,7 @@ fun Navigation() {
                 )
             }
 
-            // CREATE
-            composable("create") {
-                CreateScreen(
-                    navController = navController,
-                    viewModel = sharedViewModel
-                )
-            }
+
 
             // SENSOR
             composable("fallDetection") {
